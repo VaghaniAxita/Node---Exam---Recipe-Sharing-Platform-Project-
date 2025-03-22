@@ -6,21 +6,27 @@ const UserSchema = new mongoose.Schema({
     type: String, 
     required: true, 
     unique: true 
-},
+  },
+  email: { 
+    type: String, 
+    required: true, 
+    unique: true 
+  },
   password: { 
     type: String, 
     required: true 
-},
+  },
   role: { 
     type: String, 
     enum: ["admin", "user"], 
     default: "user" 
-},
-  recipes: [{ 
-    type: mongoose.Schema.Types.ObjectId, 
-    ref: "Recipe" 
-}],
+  },
+  createdAt: { 
+    type: Date, 
+    default: Date.now 
+  },
 });
+
 
 UserSchema.pre("save", async function (next) {
   if (!this.isModified("password")) return next();
